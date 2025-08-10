@@ -1,11 +1,8 @@
 const express = require("express");
 
  
-const app = express();
-const path = require("path");
-app.set("views", path.join(__dirname, "views"));
-
-
+const app = express(); 
+app.set("view engine", "ejs");
 app.use(express.static('public'));
 
 app.use(express.urlencoded({ extended: true }));
@@ -24,8 +21,9 @@ app.post("/", (req, res) => {
   res.redirect("/"); // will trigger GET above, sending ejes
 });
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+app.listen(8000, () => {
+  console.log("Server stared");
 });
+
+
 
