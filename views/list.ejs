@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO LIST</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>TODO LIST</h1>
+    <form action="/" method="POST" class="task-form">
+      <input type="text" name="elel" placeholder="Enter your task" required>
+      <select name="priority" required>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+      <button type="submit" class="add-btn">+</button>
+    </form>
+    
+    <div class="filter-box">
+    <label for="filter">Filter by priority:</label>
+    <select id="filter">
+      <option value="All">All</option>
+      <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
+    </div>
+  
+    <ul class="task-list">
+      <% for(let i = ejes.length - 1; i >= 0; i--) { %>
+        <li data-priority="<%= ejes[i].priority %>">
+          <input type="checkbox" class="task-check">
+          <span><%= ejes[i].task %>(<%= ejes[i].priority %>)</span>
+          <button class="edit-btn">EDIT</button>
+          <button class="delete-btn">REMOVE</button>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+<script>
+      // delete
+    document.addEventListener("DOMContentLoaded",() => {
+      document.querySelectorAll(".delete-btn").forEach(btn =>{
+        btn.addEventListener("click",() =>{
+          btn.parentElement.remove();
+        });
+      });
+    
+      // update
+      document.querySelectorAll(".edit-btn").forEach(btn =>{
+        btn.addEventListener("click",()=>{
+          const span =btn.previousElementSibling;
+          const  newTask = prompt("Edit Task:", span.innerText);
+          if (newTask && newTask.trim() !==""){
+            span.innerText = newTask.trim();
+          }
+        });
+      });
+
+  const filterSelect = document.getElementById("filter");
+  const tasks = document.querySelectorAll(".task-list li");
+
+  filterSelect.addEventListener("change",() =>{
+    const value = filterSelect.value;
+    tasks.forEach(task =>{
+      const priority = task.getAttribute("data-priority");
+
+      if(value==="All" || value ===priority){
+        task.style.display = "flex";
+      } else{
+        task.style.display = "none";
+      }
+    });
+  });
+});
+</script>
+ </body>
+</html>
