@@ -45,7 +45,9 @@
     document.addEventListener("DOMContentLoaded",() => {
       document.querySelectorAll(".delete-btn").forEach(btn =>{
         btn.addEventListener("click",() =>{
+          if(confirm("Are you sure want to delete this task?")){
           btn.parentElement.remove();
+          }
         });
       });
     
@@ -53,9 +55,17 @@
       document.querySelectorAll(".edit-btn").forEach(btn =>{
         btn.addEventListener("click",()=>{
           const span =btn.previousElementSibling;
-          const  newTask = prompt("Edit Task:", span.innerText);
-          if (newTask && newTask.trim() !==""){
-            span.innerText = newTask.trim();
+          const li = btn.parentElement;
+          const oldText = span.innerText.split("(")[0].trim();
+          const oldPriority = li.fetAttribute("data-priority");
+           
+          const newTask= prompt("Edit Task:",oldText);
+          const newPriority= prompt("Edit priority(Easy/Medium/Hard):",oldPriority);
+          
+          
+          if (newTask && newTask.trim() !=="&& new priority"){
+          span.innerText=`${newTask.trim()} (${newPriority})`;
+           li.setAttribute("data-priority",newPriority);
           }
         });
       });
